@@ -27,42 +27,13 @@ app.post("/client-requests", async (req, res) => {
     const result = await collection.insertOne(req.body);
     console.log("Client request saved successfully:", result.insertedId);
 
-    res
-      .status(201)
-      .json({
-        message: "Client request saved successfully",
-        requestId: result.insertedId,
-      });
+    res.status(201).json({
+      message: "Client request saved successfully",
+      requestId: result.insertedId,
+    });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Error saving client request" });
-  } finally {
-    // Close the MongoDB connection
-    await client.close();
-  }
-});
-
-app.get("/", async (req, res) => {
-  try {
-    // Connect to MongoDB
-    await client.connect();
-    console.log("Connected to MongoDB successfully");
-
-    // Get the "cars" collection
-    const collection = client.db("test").collection("cars");
-
-    // Insert dummy data into the "cars" collection
-    const result = await collection.insertMany(dummyCars);
-    console.log("Inserted data count:", result.insertedCount);
-
-    // Fetch and log the inserted data
-    const insertedData = await collection.find().toArray();
-    console.log("Fetched data:", insertedData);
-
-    res.send("Data inserted successfully!");
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).send("Error inserting data into MongoDB");
   } finally {
     // Close the MongoDB connection
     await client.close();
