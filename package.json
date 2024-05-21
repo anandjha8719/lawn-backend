@@ -1,0 +1,12 @@
+{
+  "name": "backend-quill",
+  "version": "1.0.0",
+  "description": "backend for task",
+  "main": "y",
+  "author": "anandjha",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongodb": "^6.6.2"
+  }
+}
