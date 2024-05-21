@@ -13,8 +13,36 @@ const dummyCars = [
 
 app.use(express.json());
 
+//this is check fo empty of non-valid necessery fields
+const validateClientRequest = (data) => {
+  const errors = [];
+  const { address, requestedDate } = data;
+
+  if (!address) {
+    errors.push("Address is required.");
+  }
+
+  if (!requestedDate) {
+    errors.push("Requested date is required.");
+  } else {
+    const requestedDateObj = new Date(requestedDate);
+    const currentDate = new Date();
+    if (requestedDateObj < currentDate) {
+      errors.push("Requested date cannot be in the past.");
+    }
+  }
+
+  return errors;
+};
+
 // Route to handle POST requests for creating client requests
 app.post("/client-requests", async (req, res) => {
+  const errors = validateClientRequest(req.body);
+
+  if (errors.length > 0) {
+    return res.status(400).json({ errors });
+  }
+
   try {
     // Connect to MongoDB
     await client.connect();
