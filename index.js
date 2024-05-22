@@ -4,12 +4,6 @@ const cors = require("cors");
 const app = express();
 const port = 8000;
 
-// Dummy data to insert into the "cars" collection
-const dummyCars = [
-  { make: "Toyota", model: "Camry", year: 2021 },
-  { make: "Honda", model: "Civic", year: 2020 },
-  { make: "Ford", model: "Mustang", year: 2022 },
-];
 
 app.use(express.json());
 const corsOptions = {
@@ -51,14 +45,14 @@ app.post("/client-requests", async (req, res) => {
   try {
     // Connect to MongoDB
     await client.connect();
-    console.log("Connected to MongoDB successfully");
+    // console.log("Connected to MongoDB successfully");
 
     // Get the clientRequests collection
     const collection = client.db("test").collection("clientRequests");
 
     // Insert the client request data into the collection
     const result = await collection.insertOne(req.body);
-    console.log("Client request saved successfully:", result.insertedId);
+    // console.log("Client request saved successfully:", result.insertedId);
 
     res.status(201).json({
       message: "Client request saved successfully",
