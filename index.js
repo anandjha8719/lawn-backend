@@ -1,6 +1,6 @@
 const express = require("express");
 const client = require("./src/db-connect");
-
+const cors = require("cors");
 const app = express();
 const port = 8000;
 
@@ -12,7 +12,12 @@ const dummyCars = [
 ];
 
 app.use(express.json());
+const corsOptions = {
+  credentials: true,
+  origin: ["http://localhost:3000"],
+};
 
+app.use(cors(corsOptions));
 //this is check fo empty of non-valid necessery fields
 const validateClientRequest = (data) => {
   const errors = [];
